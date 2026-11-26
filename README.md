@@ -4,7 +4,7 @@ Sistema completo de generación de facturas, utilizando [FastAPI](https://fastap
 
 ## Autor
 
-- Nombre del Estudiante - @perfil_de_github
+- Nombre del Estudiante - Brayan Esmith Gil Alvarez
 
 ## Descripción del Proyecto
 
