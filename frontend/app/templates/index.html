@@ -5,18 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Facturas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
 </head>
 <body>
     <div class="container">
-        <h1>Generador de Facturas PDF</h1>
-        <form method="POST" action="/generar-pdf">
+        <header class="header">
+            <h1>Generador de Facturas PDF</h1>
+            <p class="subtitulo">Ingresa el número de factura para generar, previsualizar y descargar el PDF.</p>
+        </header>
+
+        <form id="form-factura" method="POST" action="/generar-pdf">
             <div class="form-group">
-                <label for="id_factura">ID de Factura:</label>
-                <input type="text" id="id_factura" name="id_factura" required>
+                <label for="id_factura">Número de factura</label>
+                <input type="text" id="id_factura" name="id_factura"
+                       placeholder="Ej: FAC-2025-001"
+                       pattern="[A-Za-z0-9\-]+"
+                       title="Solo letras, números y guiones"
+                       autocomplete="off" required>
             </div>
-            <button type="submit">Generar PDF</button>
+            <button type="submit" id="btn-generar" class="btn btn-primario">Generar Factura</button>
         </form>
-        
+
+        <div id="mensaje-error" class="alert alert-error" role="alert" hidden></div>
+
+        <section id="vista-previa" class="vista-previa" hidden>
+            <div class="vista-previa-header">
+                <h2>Vista previa</h2>
+                <a id="btn-descargar" class="btn btn-secundario" href="#" download>Descargar PDF</a>
+            </div>
+            <iframe id="visor-pdf" title="Vista previa de la factura"></iframe>
+        </section>
+
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="alert">
