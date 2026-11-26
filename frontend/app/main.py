@@ -15,7 +15,9 @@ def texto(valor):
     return escape(str(valor)).replace('\n', '<br/>')
 
 app = Flask(__name__)
-BACKEND_URL = os.getenv('BACKEND_URL', 'http://backend:8000')
+# Configuración desde variables de entorno (definidas en docker-compose.yml)
+BACKEND_URL = os.getenv('API_URL', 'http://backend:8000')
+DEBUG = os.getenv('DEBUG', 'false').lower() == 'true'
 
 @app.route('/')
 def index():
@@ -126,5 +128,5 @@ def generar_pdf():
         abort(500, description=str(e))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000, debug=True)
+    app.run(host='0.0.0.0', port=3000, debug=DEBUG)
 
